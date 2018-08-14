@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!-- <properties> mybatis可以使用properties来引入外部properties配置文件的内容
+             两个属性：1.resource：引入类路径的资源
+                      2.url:引入网络路径或磁盘路径下的资源
+ -->
+  <properties resource="dbconfig.properties"></properties>
+  
+  <!-- settings包含很多设置项
+       <setting>表示一个设置项
+   -->
+   <settings>
+     <setting name="mapUnderscoreToCamelCase" value="true"/>
+   </settings>
+   
+   <!-- TypeAliases:别名处理器，为Java类型起别名
+    -->
+    <typeAliases>
+    <!--typeAlias:为某一个java类型起别名，注意：类名不区分大小写
+              type：指定要起别名的类型全类名，默认别名就是类名小写
+              alias:指定新别名
+      -->
+   <!--   <typeAlias type="" alias=""/> -->
+      <!-- 为某个包下的类批量取别名
+           name：包名
+       -->
+      <package name=""/>
+    </typeAliases>
+  
+  <environments default="dev_mysql"><!-- 配了两个数据库环境 -->
+    <environment id="dev_mysql">
+     <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+         <property name="driver" value="${jdbc.driver}"/>
+         <property name="url" value="${jdbc.url}"/>
+         <property name="username" value="${jdbc.username}"/>
+         <property name="password" value="${jdbc.password}"/>
+     </dataSource>
+   </environment>
+   
+   <environment id="dev_oracle">
+     <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+         <property name="driver" value="${orcl.driver}"/>
+         <property name="url" value="${orcl.url}"/>
+         <property name="username" value="${orcl.username}"/>
+         <property name="password" value="${orcl.password}"/>
+     </dataSource>
+   </environment>
+  </environments>
+  
+  <databaseIdProvider type="DB_VENDOR">
+  <!-- :起别名 -->
+     <property name="MySQL" value="mysql"/>
+     <property name="Oracle" value="oraclel"/>
+     <property name="SQL Server" value="sqlserver"/>
+  </databaseIdProvider>
+     
+
+  
+  <mappers>
+     <!--<mapper resource="EmployeeMapper.xml"/>注册 -->
+     <!--<mapper class="com.atguigu.mybatis.dao.EmployeeMapperAnnotation"/>注解 -->
+     <package name="com.atguigu.mybatis.dao"/>
+  </mappers>
+</configuration>
